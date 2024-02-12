@@ -21,28 +21,28 @@ export const addContact = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  },
-  {
-    condition: ({ name, phone }, { getState }) => {
-      const { items } = getState();
-      const normalizedName = name.toLowerCase();
-      const normalizedNumber = phone.toLowerCase();
-
-      const dublicate = items.find(item => {
-        const normalizedCurrentName = item.name.toLowerCase();
-        const normalizedCurrentNumber = item.phone.toLowerCase();
-        return (
-          normalizedCurrentName === normalizedName ||
-          normalizedCurrentNumber === normalizedNumber
-        );
-      });
-
-      if (dublicate) {
-        alert(`Book with ${name} and ${phone} already in list`);
-        return false;
-      }
-    },
   }
+  //   {
+  //     condition: ({ name, phone }, { getState }) => {
+  //       const { items } = getState();
+  //       const normalizedName = name.toLowerCase();
+  //       const normalizedNumber = phone.toLowerCase();
+
+  //       const dublicate = items.find(item => {
+  //         const normalizedCurrentName = item.name.toLowerCase();
+  //         const normalizedCurrentNumber = item.phone.toLowerCase();
+  //         return (
+  //           normalizedCurrentName === normalizedName ||
+  //           normalizedCurrentNumber === normalizedNumber
+  //         );
+  //       });
+
+  //       if (dublicate) {
+  //         alert(`Book with ${name} and ${phone} already in list`);
+  //         return false;
+  //       }
+  //     },
+  //   }
 );
 export const deleteContact = createAsyncThunk(
   'contacts/delete',

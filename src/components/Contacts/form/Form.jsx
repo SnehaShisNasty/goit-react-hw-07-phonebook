@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './Form.module.css';
+
 import { getAllContacts } from '../../../redux/selctors';
 import { useSelector, useDispatch } from 'react-redux';
 import { addContact } from '../../../redux/contacts/contacts-operations';
@@ -10,7 +11,6 @@ const INITIAL_STATE = {
 };
 const Form = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
-
   const { items } = useSelector(getAllContacts);
   const dispatch = useDispatch();
   const handleChange = ({ target }) => {
@@ -26,7 +26,6 @@ const Form = () => {
 
     onAddContact({ ...state });
   };
-
   const isDublicate = ({ name, phone }) => {
     const normalizedName = name.toLowerCase();
     const normalizedNumber = phone.toLowerCase();
@@ -46,8 +45,8 @@ const Form = () => {
     if (isDublicate(data)) {
       return alert(`Book with ${data.phone} and ${data.name} already in list`);
     }
-
     dispatch(addContact(data));
+
     reset();
   };
 

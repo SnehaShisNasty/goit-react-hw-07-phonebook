@@ -1,15 +1,16 @@
 export const getAllContacts = store => store.contacts;
 export const getFiltered = store => {
   const { contacts, filter } = store;
+  const { items, isLoading, error } = contacts;
   if (!filter) {
     return contacts;
   }
 
   const normalizedFilter = filter.toLowerCase();
 
-  const filteredBooks = contacts.filter(({ name, number }) => {
+  const filteredBooks = items.filter(({ name, phone }) => {
     const normalizedTitle = name.toLowerCase();
-    const normalizedAuthor = number.toLowerCase();
+    const normalizedAuthor = phone.toLowerCase();
 
     return (
       normalizedAuthor.includes(normalizedFilter) ||
@@ -17,6 +18,10 @@ export const getFiltered = store => {
     );
   });
 
-  return filteredBooks;
+  return {
+    items: filteredBooks,
+    isLoading,
+    error,
+  };
 };
 export const getFilter = store => store.filter;
