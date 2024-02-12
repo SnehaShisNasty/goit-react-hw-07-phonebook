@@ -11,8 +11,10 @@ export const ContactList = () => {
   const { items = [], isLoading, error } = useSelector(getFiltered);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    if (items.length === 0) {
+      dispatch(fetchContacts());
+    }
+  }, [dispatch, items]);
 
   const onDeleteContact = id => {
     dispatch(deleteContact(id));
