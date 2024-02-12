@@ -14,7 +14,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="books" element={<PhoneBooksPage />} />
+        <Route path="phonebooks" element={<PhoneBooksPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
