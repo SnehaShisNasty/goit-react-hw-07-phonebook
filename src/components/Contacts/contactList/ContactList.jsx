@@ -8,12 +8,11 @@ import {
   deleteContact,
 } from '../../../redux/contacts/contacts-operations';
 export const ContactList = () => {
-  const { items, isLoading, error } = useSelector(getFiltered);
+  const { items = [], isLoading, error } = useSelector(getFiltered);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchContacts());
-  });
+  }, [dispatch]);
 
   const onDeleteContact = id => {
     dispatch(deleteContact(id));
