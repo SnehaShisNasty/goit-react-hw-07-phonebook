@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './Form.module.css';
-import { getFiltered } from '../../../redux/selctors';
+import { getAllContacts } from '../../../redux/selctors';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from '../../../redux/contacts/contacts-slice';
-
+import { addContact } from '../../../redux/contacts/contacts-operations';
 const INITIAL_STATE = {
   name: '',
-  number: '',
+  phone: '',
 };
 const Form = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
 
-  const contacts = useSelector(getFiltered);
+  const { items, isLoading, error } = useSelector(getAllContacts);
   const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
@@ -29,13 +28,13 @@ const Form = () => {
     onAddContact({ ...state });
   };
 
-  const isDublicate = ({ name, number }) => {
+  const isDublicate = ({ name, phone }) => {
     const normalizedName = name.toLowerCase();
-    const normalizedNumber = number.toLowerCase();
+    const normalizedNumber = phone.toLowerCase();
 
-    const dublicate = contacts.find(item => {
+    const dublicate = items.find(item => {
       const normalizedCurrentName = item.name.toLowerCase();
-      const normalizedCurrentNumber = item.number.toLowerCase();
+      const normalizedCurrentNumber = item.phone.toLowerCase();
       return (
         normalizedCurrentName === normalizedName ||
         normalizedCurrentNumber === normalizedNumber
@@ -46,7 +45,7 @@ const Form = () => {
   };
   const onAddContact = data => {
     if (isDublicate(data)) {
-      return alert(`Book with ${data.number} and ${data.name} already in list`);
+      return alert(`Book with ${data.phone} and ${data.name} already in list`);
     }
 
     dispatch(addContact(data));
@@ -54,7 +53,7 @@ const Form = () => {
   };
 
   const reset = () => {
-    setState({ name: '', number: '' });
+    setState({ name: '', phone: '' });
   };
 
   const nameInputId = nanoid();
@@ -78,8 +77,8 @@ const Form = () => {
         <input
           className={css.input}
           type="tel"
-          name="number"
-          value={state.number}
+          name="phone"
+          value={state.phone}
           onChange={handleChange}
           id={numberInputId}
           required
