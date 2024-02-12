@@ -11,9 +11,8 @@ const INITIAL_STATE = {
 const Form = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
 
-  const { items, isLoading, error } = useSelector(getAllContacts);
+  const { items } = useSelector(getAllContacts);
   const dispatch = useDispatch();
-
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setState({
