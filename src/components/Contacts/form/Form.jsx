@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './Form.module.css';
 
-import { getAllContacts } from '../../../redux/selctors';
+import { selectContacts } from '../../../redux/selctors';
 import { useSelector, useDispatch } from 'react-redux';
 import { addContact } from '../../../redux/contacts/contacts-operations';
 const INITIAL_STATE = {
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 };
 const Form = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
-  const { items } = useSelector(getAllContacts);
+  const items = useSelector(selectContacts);
   const dispatch = useDispatch();
   const handleChange = ({ target }) => {
     const { name, value } = target;

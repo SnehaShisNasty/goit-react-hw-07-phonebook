@@ -1,27 +1,19 @@
-export const getAllContacts = store => store.contacts;
-export const getFiltered = store => {
-  const { contacts, filter } = store;
-  const { items, isLoading, error } = contacts;
-  if (!filter) {
-    return contacts;
-  }
+import { createSelector } from '@reduxjs/toolkit';
 
-  const normalizedFilter = filter.toLowerCase();
+export const selectContacts = state => state.contacts.items;
 
-  const filteredBooks = items.filter(({ name, phone }) => {
-    const normalizedTitle = name.toLowerCase();
-    const normalizedAuthor = phone.toLowerCase();
+export const selectIsLoading = state => state.contacts.isLoading;
 
-    return (
-      normalizedAuthor.includes(normalizedFilter) ||
-      normalizedTitle.includes(normalizedFilter)
+export const selectError = state => state.contacts.error;
+
+export const selectFilter = state => state.filter;
+
+export const selectVisibleContacts = createSelector(
+  [selectContacts, selectFilter],
+  (contacts, filter) => {
+    const normalizedFilter = filter.toLocaleLowerCase();
+    return contacts.filter(({ name }) =>
+      name.toLocaleLowerCase().includes(normalizedFilter)
     );
-  });
-
-  return {
-    items: filteredBooks,
-    isLoading,
-    error,
-  };
-};
-export const getFilter = store => store.filter;
+  }
+);
